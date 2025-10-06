@@ -20,20 +20,29 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 10px;
         }
 
         .container {
             position: relative;
             text-align: center;
             z-index: 10;
-            padding: 40px;
+            padding: 30px 20px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
+            border-radius: 20px;
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 600px;
+            width: 100%;
             animation: fadeInScale 1s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
         }
 
         @keyframes fadeInScale {
@@ -49,11 +58,24 @@
         }
 
         h1 {
-            font-size: 3em;
+            font-size: 2.5em;
             color: #ffd700;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
             animation: glow 2s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
         }
 
         @keyframes glow {
@@ -69,11 +91,24 @@
         }
 
         .wishes {
-            font-size: 1.3em;
+            font-size: 1.1em;
             color: #fff;
-            line-height: 2;
+            line-height: 1.8;
             margin: 20px 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .wishes {
+                font-size: 1em;
+                line-height: 1.6;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .wishes {
+                font-size: 0.9em;
+            }
         }
 
         .wish-line {
@@ -113,14 +148,34 @@
         /* Moon */
         .moon {
             position: absolute;
-            top: 80px;
-            right: 100px;
-            width: 150px;
-            height: 150px;
+            top: 50px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
             background: radial-gradient(circle at 30% 30%, #fff9e6, #ffd700);
             border-radius: 50%;
-            box-shadow: 0 0 60px rgba(255, 215, 0, 0.8), 0 0 100px rgba(255, 215, 0, 0.4);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
             animation: float 6s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        @media (max-width: 768px) {
+            .moon {
+                width: 70px;
+                height: 70px;
+                top: 30px;
+                right: 30px;
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .moon {
+                width: 50px;
+                height: 50px;
+                top: 20px;
+                right: 20px;
+            }
         }
 
         @keyframes float {
@@ -170,6 +225,13 @@
             box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
         }
 
+        @media (max-width: 768px) {
+            .lantern {
+                width: 30px;
+                height: 45px;
+            }
+        }
+
         .lantern::before {
             content: '';
             position: absolute;
@@ -182,6 +244,14 @@
             border-radius: 5px;
         }
 
+        @media (max-width: 768px) {
+            .lantern::before {
+                width: 22px;
+                height: 8px;
+                top: -8px;
+            }
+        }
+
         .lantern::after {
             content: '';
             position: absolute;
@@ -192,6 +262,14 @@
             height: 15px;
             background: #ffd700;
             border-radius: 0 0 10px 10px;
+        }
+
+        @media (max-width: 768px) {
+            .lantern::after {
+                width: 15px;
+                height: 12px;
+                bottom: -12px;
+            }
         }
 
         @keyframes swing {
@@ -212,11 +290,25 @@
             animation-delay: 0s;
         }
 
+        @media (max-width: 768px) {
+            .lantern1 {
+                top: 30px;
+                left: 30px;
+            }
+        }
+
         .lantern2 {
             top: 150px;
             right: 150px;
             animation-delay: 1s;
             background: linear-gradient(to bottom, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+        }
+
+        @media (max-width: 768px) {
+            .lantern2 {
+                top: 80px;
+                right: 50px;
+            }
         }
 
         .lantern3 {
@@ -226,12 +318,20 @@
             background: linear-gradient(to bottom, #ff69b4 0%, #ff85c0 50%, #ff69b4 100%);
         }
 
+        @media (max-width: 768px) {
+            .lantern3 {
+                bottom: 50px;
+                left: 40px;
+            }
+        }
+
         /* Floating particles */
         .particle {
             position: absolute;
             background: rgba(255, 215, 0, 0.6);
             border-radius: 50%;
             animation: floatParticle 8s infinite;
+            will-change: transform;
         }
 
         @keyframes floatParticle {
@@ -296,9 +396,12 @@
     </div>
 
     <script>
-        // Create stars
+        // Create stars (giảm số lượng trên mobile)
         function createStars() {
-            for (let i = 0; i < 100; i++) {
+            const isMobile = window.innerWidth <= 768;
+            const starCount = isMobile ? 30 : 100;
+
+            for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = Math.random() * 100 + '%';
@@ -308,9 +411,12 @@
             }
         }
 
-        // Create floating particles
+        // Create floating particles (giảm số lượng trên mobile)
         function createParticles() {
-            for (let i = 0; i < 20; i++) {
+            const isMobile = window.innerWidth <= 768;
+            const particleCount = isMobile ? 8 : 20;
+
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
