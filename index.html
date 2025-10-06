@@ -21,6 +21,29 @@
             justify-content: center;
             align-items: center;
             padding: 10px;
+            animation: backgroundShift 30s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0% {
+                background: linear-gradient(135deg, #0a0e27 0%, #1a1f4d 50%, #2a1a4d 100%);
+            }
+
+            25% {
+                background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #4a1942 100%);
+            }
+
+            50% {
+                background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            }
+
+            75% {
+                background: linear-gradient(135deg, #2c1a4d 0%, #4a2c5e 50%, #1a3a52 100%);
+            }
+
+            100% {
+                background: linear-gradient(135deg, #0a0e27 0%, #1a1f4d 50%, #2a1a4d 100%);
+            }
         }
 
         .container {
@@ -35,7 +58,23 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 600px;
             width: 100%;
-            animation: fadeInScale 1s ease-out;
+            animation: fadeInScale 1s ease-out, containerPulse 6s ease-in-out infinite 1s;
+        }
+
+        @keyframes containerPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 25px 80px rgba(255, 215, 0, 0.2);
+                border-color: rgba(255, 215, 0, 0.3);
+            }
         }
 
         @media (max-width: 768px) {
@@ -58,23 +97,41 @@
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: 3.5em;
             color: #ffd700;
             margin-bottom: 20px;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            animation: glow 2s ease-in-out infinite;
+            animation: glow 2s ease-in-out infinite, textFloat 3s ease-in-out infinite;
+            font-weight: bold;
+            letter-spacing: 3px;
+            display: none;
+            /* Ẩn tiêu đề ban đầu */
+        }
+
+        @keyframes textFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+
+            50% {
+                transform: translateY(-15px) scale(1.05);
+            }
         }
 
         @media (max-width: 768px) {
             h1 {
-                font-size: 1.8em;
+                font-size: 2.2em;
                 margin-bottom: 15px;
+                letter-spacing: 2px;
             }
         }
 
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.5em;
+                font-size: 1.8em;
+                letter-spacing: 1px;
             }
         }
 
@@ -82,70 +139,97 @@
 
             0%,
             100% {
-                text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.3);
             }
 
             50% {
-                text-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6);
+                text-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.4);
             }
         }
 
         .wishes {
-            font-size: 1.1em;
+            font-size: 2.5em;
             color: #fff;
             line-height: 1.8;
             margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5);
+            opacity: 0;
+            transform: scale(0.5) translateY(50px);
+            animation: wishZoom 1.2s ease-out forwards;
+            animation-delay: 4s;
+            /* Xuất hiện sau pháo hoa */
+            font-weight: bold;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .wishes::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent);
+            animation: wishGlow 1.5s ease-out forwards;
+            animation-delay: 4s;
+        }
+
+        @keyframes wishZoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(50px);
+            }
+
+            80% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes wishGlow {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0;
+            }
         }
 
         @media (max-width: 768px) {
             .wishes {
-                font-size: 1em;
-                line-height: 1.6;
+                font-size: 1.8em;
+                letter-spacing: 1px;
+            }
+
+            .wishes::after {
+                width: 150px;
+                height: 150px;
             }
         }
 
         @media (max-width: 480px) {
             .wishes {
-                font-size: 0.9em;
+                font-size: 1.4em;
+                letter-spacing: 0.5px;
+            }
+
+            .wishes::after {
+                width: 100px;
+                height: 100px;
             }
         }
 
-        .wish-line {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideIn 0.8s ease-out forwards;
-            margin: 15px 0;
-        }
-
-        .wish-line:nth-child(1) {
-            animation-delay: 0.5s;
-        }
-
-        .wish-line:nth-child(2) {
-            animation-delay: 1s;
-        }
-
-        .wish-line:nth-child(3) {
-            animation-delay: 1.5s;
-        }
-
-        .wish-line:nth-child(4) {
-            animation-delay: 2s;
-        }
-
-        .wish-line:nth-child(5) {
-            animation-delay: 2.5s;
-        }
-
-        @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Moon */
         .moon {
             position: absolute;
             top: 50px;
@@ -155,8 +239,22 @@
             background: radial-gradient(circle at 30% 30%, #fff9e6, #ffd700);
             border-radius: 50%;
             box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
-            animation: float 6s ease-in-out infinite;
+            animation: float 6s ease-in-out infinite, moonGlow 4s ease-in-out infinite;
             will-change: transform;
+        }
+
+        @keyframes moonGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+                filter: brightness(1);
+            }
+
+            50% {
+                box-shadow: 0 0 80px rgba(255, 215, 0, 1), 0 0 120px rgba(255, 215, 0, 0.6);
+                filter: brightness(1.3);
+            }
         }
 
         @media (max-width: 768px) {
@@ -190,7 +288,6 @@
             }
         }
 
-        /* Stars */
         .star {
             position: absolute;
             background: white;
@@ -214,15 +311,38 @@
             }
         }
 
-        /* Lanterns */
         .lantern {
             position: absolute;
             width: 40px;
             height: 60px;
             background: linear-gradient(to bottom, #ff6b6b 0%, #ff8787 50%, #ff6b6b 100%);
             border-radius: 10px;
-            animation: swing 4s ease-in-out infinite;
+            animation: swing 4s ease-in-out infinite, floatLantern 5s ease-in-out infinite, rotateLantern 6s ease-in-out infinite;
             box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
+        }
+
+        @keyframes floatLantern {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes rotateLantern {
+
+            0%,
+            100% {
+                transform: rotateY(0deg);
+            }
+
+            50% {
+                transform: rotateY(20deg);
+            }
         }
 
         @media (max-width: 768px) {
@@ -290,25 +410,11 @@
             animation-delay: 0s;
         }
 
-        @media (max-width: 768px) {
-            .lantern1 {
-                top: 30px;
-                left: 30px;
-            }
-        }
-
         .lantern2 {
             top: 150px;
             right: 150px;
             animation-delay: 1s;
             background: linear-gradient(to bottom, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
-        }
-
-        @media (max-width: 768px) {
-            .lantern2 {
-                top: 80px;
-                right: 50px;
-            }
         }
 
         .lantern3 {
@@ -318,14 +424,47 @@
             background: linear-gradient(to bottom, #ff69b4 0%, #ff85c0 50%, #ff69b4 100%);
         }
 
+        .lantern4 {
+            top: 200px;
+            left: 50px;
+            animation-delay: 0.5s;
+            background: linear-gradient(to bottom, #87ceeb 0%, #9fd4f0 50%, #87ceeb 100%);
+        }
+
+        .lantern5 {
+            bottom: 150px;
+            right: 100px;
+            animation-delay: 1.5s;
+            background: linear-gradient(to bottom, #98fb98 0%, #b0ffb0 50%, #98fb98 100%);
+        }
+
         @media (max-width: 768px) {
+            .lantern1 {
+                top: 30px;
+                left: 30px;
+            }
+
+            .lantern2 {
+                top: 80px;
+                right: 50px;
+            }
+
             .lantern3 {
                 bottom: 50px;
                 left: 40px;
             }
+
+            .lantern4 {
+                top: 120px;
+                left: 20px;
+            }
+
+            .lantern5 {
+                bottom: 80px;
+                right: 30px;
+            }
         }
 
-        /* Floating particles */
         .particle {
             position: absolute;
             background: rgba(255, 215, 0, 0.6);
@@ -354,21 +493,137 @@
             }
         }
 
-        .emoji {
-            display: inline-block;
-            animation: bounce 2s ease-in-out infinite;
-            margin: 0 5px;
+        .firework {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px currentColor;
         }
 
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                box-shadow: 0 0 20px currentColor;
             }
 
             50% {
-                transform: translateY(-10px);
+                opacity: 1;
+                box-shadow: 0 0 30px currentColor;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+                box-shadow: 0 0 5px currentColor;
+            }
+        }
+
+        .firework-trail {
+            position: absolute;
+            width: 4px;
+            height: 30px;
+            pointer-events: none;
+        }
+
+        @keyframes rocketLaunch {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-500px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes trailFade {
+            0% {
+                opacity: 0.8;
+                height: 30px;
+            }
+
+            100% {
+                opacity: 0;
+                height: 10px;
+            }
+        }
+
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(0) translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(300px) translateY(300px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes sparkleEffect {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .moon-sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 215, 0, 0.8);
+            border-radius: 50%;
+            animation: moonSparkle 2s infinite;
+        }
+
+        @keyframes moonSparkle {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        .firework-ring {
+            position: absolute;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: ringExpand 0.8s ease-out forwards;
+        }
+
+        @keyframes ringExpand {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2.5);
+                opacity: 0;
             }
         }
     </style>
@@ -382,25 +637,20 @@
     <div class="lantern lantern1"></div>
     <div class="lantern lantern2"></div>
     <div class="lantern lantern3"></div>
+    <div class="lantern lantern4"></div>
+    <div class="lantern lantern5"></div>
 
     <!-- Main Content -->
     <div class="container">
-        <h1>🌕 Trung Thu Vui Nhẻ Nha 🏮</h1>
-        <div class="wishes">
-            <div class="wish-line">✨ Chúc cậu tất cả trừ vất vả.<span class="emoji">💖</span></div>
-            <div class="wish-line">😊 Cười nhiều hơn và giữ gìn sức khỏe.</div>
-            <div class="wish-line">🌈 Hong có suy nghĩ tiêu cực.</div>
-            <div class="wish-line">💭 Và hong có nghĩ tùm lum nha.</div>
-            <div class="wish-line">🥰 Và yêu thương bản thân mình nhiều hơn biết chưa.</div>
-        </div>
+        <h1>🌕 Trung Thu Vui Vẻ Nha 🏮</h1>
+        <div class="wishes">Trung Thu Vui Vẻ!</div>
     </div>
 
     <script>
-        // Create stars (giảm số lượng trên mobile)
+        // Create stars
         function createStars() {
             const isMobile = window.innerWidth <= 768;
             const starCount = isMobile ? 30 : 100;
-
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
@@ -411,11 +661,10 @@
             }
         }
 
-        // Create floating particles (giảm số lượng trên mobile)
+        // Create floating particles
         function createParticles() {
             const isMobile = window.innerWidth <= 768;
             const particleCount = isMobile ? 8 : 20;
-
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -428,8 +677,315 @@
             }
         }
 
+        // Create moon sparkles
+        function createMoonSparkles() {
+            const moon = document.querySelector('.moon');
+            const sparkleCount = 20;
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'moon-sparkle';
+                const angle = (Math.PI * 2 * i) / sparkleCount;
+                const radius = 60 + Math.random() * 40;
+                sparkle.style.left = `calc(50% + ${Math.cos(angle) * radius}px)`;
+                sparkle.style.top = `calc(50% + ${Math.sin(angle) * radius}px)`;
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                moon.appendChild(sparkle);
+            }
+        }
+
+        // Enhanced fireworks effect
+        function createFirework(x, y) {
+            const colors = ['#ff6b6b', '#ffd700', '#ff69b4', '#87ceeb', '#98fb98', '#dda0dd', '#ff4500', '#00ff00'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const particleCount = 120;
+
+            // Main firework circle
+            for (let i = 0; i < particleCount; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = x + 'px';
+                firework.style.top = y + 'px';
+                firework.style.background = color;
+                const angle = (Math.PI * 2 * i) / particleCount;
+                const velocity = 150 + Math.random() * 150;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                firework.style.setProperty('--tx', tx + 'px');
+                firework.style.setProperty('--ty', ty + 'px');
+                firework.style.animation = 'explode 2.2s ease-out forwards';
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 2200);
+            }
+
+            // Secondary smaller circle
+            const color2 = colors[Math.floor(Math.random() * colors.length)];
+            for (let i = 0; i < 80; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = x + 'px';
+                firework.style.top = y + 'px';
+                firework.style.background = color2;
+                const angle = (Math.PI * 2 * i) / 80;
+                const velocity = 80 + Math.random() * 80;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                firework.style.setProperty('--tx', tx + 'px');
+                firework.style.setProperty('--ty', ty + 'px');
+                firework.style.animation = 'explode 1.9s ease-out forwards';
+                firework.style.animationDelay = '0.5s';
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 2400);
+            }
+
+            // Central flash
+            for (let i = 0; i < 20; i++) {
+                const flash = document.createElement('div');
+                flash.style.position = 'absolute';
+                flash.style.left = x + 'px';
+                flash.style.top = y + 'px';
+                flash.style.width = '6px';
+                flash.style.height = '180px';
+                flash.style.background = `linear-gradient(to bottom, ${color}, transparent)`;
+                flash.style.transformOrigin = 'top center';
+                flash.style.transform = `rotate(${i * 18}deg)`;
+                flash.style.opacity = '0';
+                flash.style.animation = 'flashExpand 0.8s ease-out';
+                flash.style.pointerEvents = 'none';
+                document.body.appendChild(flash);
+                setTimeout(() => flash.remove(), 800);
+            }
+
+            // Explosion rings
+            for (let i = 0; i < 2; i++) {
+                const ring = document.createElement('div');
+                ring.className = 'firework-ring';
+                ring.style.left = x + 'px';
+                ring.style.top = y + 'px';
+                ring.style.width = `${100 + i * 50}px`;
+                ring.style.height = `${100 + i * 50}px`;
+                ring.style.borderColor = i % 2 === 0 ? color : color2;
+                ring.style.animationDelay = `${i * 0.2}s`;
+                document.body.appendChild(ring);
+                setTimeout(() => ring.remove(), 1000);
+            }
+        }
+
+        const flashStyle = document.createElement('style');
+        flashStyle.textContent = `
+            @keyframes flashExpand {
+                0% { opacity: 1; transform: scale(0.5) rotate(var(--rotation, 0deg)); }
+                100% { opacity: 0; transform: scale(3.5) rotate(var(--rotation, 0deg)); }
+            }
+        `;
+        document.head.appendChild(flashStyle);
+
+        // Rocket launch
+        function launchRocket(startX, targetY) {
+            const colors = ['#ff6b6b', '#ffd700', '#ff69b4', '#87ceeb', '#98fb98', '#dda0dd'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const rocket = document.createElement('div');
+            rocket.style.position = 'absolute';
+            rocket.style.left = startX + 'px';
+            rocket.style.bottom = '0px';
+            rocket.style.width = '12px';
+            rocket.style.height = '35px';
+            rocket.style.background = `linear-gradient(to top, ${color}, white)`;
+            rocket.style.borderRadius = '50% 50% 0 0';
+            rocket.style.boxShadow = `0 0 35px ${color}`;
+            rocket.style.animation = 'rocketLaunch 2.2s ease-out forwards';
+            const trail = document.createElement('div');
+            trail.className = 'firework-trail';
+            trail.style.left = startX + 'px';
+            trail.style.bottom = '0px';
+            trail.style.background = `linear-gradient(to top, transparent, ${color})`;
+            trail.style.animation = 'trailFade 2.2s ease-out forwards';
+            document.body.appendChild(rocket);
+            document.body.appendChild(trail);
+            setTimeout(() => {
+                createFirework(startX, targetY);
+                rocket.remove();
+                trail.remove();
+            }, 2200);
+        }
+
+        // Random fireworks with rocket
+        function randomFireworks() {
+            const x = 100 + Math.random() * (window.innerWidth - 200);
+            const y = 100 + Math.random() * (window.innerHeight * 0.4);
+            launchRocket(x, y);
+        }
+
+        // Fireworks every 0.7-1.2 seconds initially, stop after 4 seconds
+        let fireworkInterval = setInterval(randomFireworks, 700 + Math.random() * 500);
+        setTimeout(() => clearInterval(fireworkInterval), 4000);
+
+        // Shooting star
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.style.position = 'absolute';
+            star.style.width = '4px';
+            star.style.height = '4px';
+            star.style.background = 'white';
+            star.style.borderRadius = '50%';
+            star.style.boxShadow = '0 0 15px white';
+            star.style.left = Math.random() * window.innerWidth + 'px';
+            star.style.top = '0px';
+            const duration = 1 + Math.random();
+            star.style.animation = `shootingStar ${duration}s linear`;
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), duration * 1000);
+        }
+
+        setInterval(createShootingStar, 2000 + Math.random() * 2000);
+
+        // Sparkle effect
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.style.position = 'absolute';
+            sparkle.style.width = '6px';
+            sparkle.style.height = '6px';
+            sparkle.style.background = 'white';
+            sparkle.style.borderRadius = '50%';
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.animation = 'sparkleEffect 1.5s ease-out';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.8)';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1500);
+        }
+
+        setInterval(createSparkle, 200);
+
+        // Cloud effect
+        function createCloud() {
+            const cloud = document.createElement('div');
+            cloud.style.position = 'absolute';
+            cloud.style.top = Math.random() * 40 + 10 + '%';
+            cloud.style.left = '-150px';
+            cloud.style.width = '100px';
+            cloud.style.height = '40px';
+            cloud.style.background = 'rgba(255, 255, 255, 0.1)';
+            cloud.style.borderRadius = '50px';
+            cloud.style.boxShadow = '0 0 30px rgba(255, 255, 255, 0.2)';
+            cloud.style.animation = 'cloudMove 30s linear';
+            cloud.style.pointerEvents = 'none';
+            for (let i = 0; i < 3; i++) {
+                const part = document.createElement('div');
+                part.style.position = 'absolute';
+                part.style.width = 40 + Math.random() * 30 + 'px';
+                part.style.height = 30 + Math.random() * 20 + 'px';
+                part.style.background = 'rgba(255, 255, 255, 0.15)';
+                part.style.borderRadius = '50%';
+                part.style.left = i * 25 + 'px';
+                part.style.top = Math.random() * 10 + 'px';
+                cloud.appendChild(part);
+            }
+            document.body.appendChild(cloud);
+            setTimeout(() => cloud.remove(), 30000);
+        }
+
+        const cloudStyle = document.createElement('style');
+        cloudStyle.textContent = `
+            @keyframes cloudMove {
+                0% { left: -150px; }
+                100% { left: calc(100% + 150px); }
+            }
+        `;
+        document.head.appendChild(cloudStyle);
+
+        setInterval(createCloud, 8000);
+        createCloud();
+
+        // Aura ring
+        function createAuraRing() {
+            const ring = document.createElement('div');
+            ring.style.position = 'absolute';
+            ring.style.left = '50%';
+            ring.style.top = '50%';
+            ring.style.transform = 'translate(-50%, -50%)';
+            ring.style.width = '600px';
+            ring.style.height = '300px';
+            ring.style.border = '2px solid rgba(255, 215, 0, 0.3)';
+            ring.style.borderRadius = '50%';
+            ring.style.animation = 'ringPulse 3s ease-out';
+            ring.style.pointerEvents = 'none';
+            ring.style.zIndex = '5';
+            document.querySelector('.container').appendChild(ring);
+            setTimeout(() => ring.remove(), 3000);
+        }
+
+        const ringStyle = document.createElement('style');
+        ringStyle.textContent = `
+            @keyframes ringPulse {
+                0% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; border-width: 4px; }
+                100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; border-width: 1px; }
+            }
+        `;
+        document.head.appendChild(ringStyle);
+
+        setInterval(createAuraRing, 4000);
+
+        // Butterfly effect
+        function createButterfly() {
+            const butterfly = document.createElement('div');
+            butterfly.style.position = 'absolute';
+            butterfly.style.left = Math.random() * window.innerWidth + 'px';
+            butterfly.style.top = Math.random() * window.innerHeight + 'px';
+            butterfly.style.fontSize = '24px';
+            butterfly.innerHTML = '🦋';
+            butterfly.style.animation = 'butterflyFly 10s ease-in-out';
+            butterfly.style.pointerEvents = 'none';
+            butterfly.style.filter = 'drop-shadow(0 0 5px rgba(255, 215, 0, 0.5))';
+            document.body.appendChild(butterfly);
+            setTimeout(() => butterfly.remove(), 10000);
+        }
+
+        const butterflyStyle = document.createElement('style');
+        butterflyStyle.textContent = `
+            @keyframes butterflyFly {
+                0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { transform: translate(${Math.random() * 400 - 200}px, ${Math.random() * 400 - 200}px) rotate(360deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(butterflyStyle);
+
+        setInterval(createButterfly, 5000);
+
+        // Confetti effect
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#ffd700', '#ff69b4', '#87ceeb', '#98fb98'];
+            const confetti = document.createElement('div');
+            confetti.style.position = 'absolute';
+            confetti.style.left = Math.random() * window.innerWidth + 'px';
+            confetti.style.top = '-20px';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animation = `confettiFall ${3 + Math.random() * 2}s linear`;
+            confetti.style.pointerEvents = 'none';
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 5000);
+        }
+
+        const confettiStyle = document.createElement('style');
+        confettiStyle.textContent = `
+            @keyframes confettiFall {
+                0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(720deg); opacity: 0.5; }
+            }
+        `;
+        document.head.appendChild(confettiStyle);
+
+        setInterval(createConfetti, 150);
+
+        // Initialize effects
         createStars();
         createParticles();
+        createMoonSparkles();
     </script>
 </body>
 
